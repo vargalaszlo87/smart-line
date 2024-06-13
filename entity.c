@@ -51,9 +51,10 @@ bool entityInit(entity *this) {
         message("entityInit_DEFAULT_ERROR");
         return false;
     }
+    // default: the entity can receive a work item
+    this->interface.inputBlocked = false;
 
-
-
+    return true;
 }
 
 bool entityMake(entity *this) {
@@ -63,9 +64,7 @@ bool entityMake(entity *this) {
         - Foglalja le a memóriát az gépen belüli FIFO-hoz, inWaiting + working + outWaiting mennyiségek alapján
 */
 
-
     // CAPACITY section
-
     #ifdef NDEBUG
         assert(this->capacity.working < UINT32_MAX);
         assert(this->capacity.inWaiting < UINT32_MAX);
@@ -84,10 +83,6 @@ bool entityMake(entity *this) {
         return false;
     }
 
-
-
-
-    this->interface.inputBlocked = false;
     return true;
 }
 
@@ -97,6 +92,15 @@ bool entityTakt(entity *this) {
 
 
 bool entityRunning(entity *this) {    while (true) {
+
+/*
+    DEV TODO:
+        - check:
+            - ha a status szerint fut, akkor kilep
+            - ha ures akkor
+*/
+
+
         // command
         if (entityGetStatus(this) != RUN)
             break;
@@ -123,18 +127,22 @@ bool entityIsEmpty(entity *this) {
         }
         i++;
     }
+    return isEmpty;
 }
 
-bool entityRun(entity *this) {
+int8_t entityRun(entity *this) {
     this->status = RUN;
+    return this->status;
 }
 
-bool entityStop(entity *this) {
+int8_t entityStop(entity *this) {
     this->status = STOP;
+    return this->status;
 }
 
-bool entitySetStatus(entity *this, int8_t status) {
+int8_t entitySetStatus(entity *this, int8_t status) {
     this->status = status;
+    return this->status;
 }
 
 int8_t entityGetStatus(entity *this) {

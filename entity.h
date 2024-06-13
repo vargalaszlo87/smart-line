@@ -23,7 +23,7 @@ typedef struct _entity {
         MACHINE = 1,            // egy gep
         MOVING = 2,             // egy mozgato eszkoz
         STORAGE = 3             // egy tarolo
-    };
+    } entity_type;
     // interface
     struct _interface {
         int8_t type;
@@ -32,7 +32,7 @@ typedef struct _entity {
             TYPE_1N = 1,        // egytol jon - tobbfele mehet
             TYPE_N1 = 2,        // tobbfelol jon - egyfele mehet
             TYPE_NN = 3         // tobbfelol jon - tobbfele mehet
-        };
+        } interface_type;
         int32_t inSize;         // egyszerre ennyi jon be
         int32_t outSize;        // egyszerre ennyi megy ki
         bool inputBlocked;      // nem engedem be
@@ -64,16 +64,16 @@ typedef struct _entity {
         // maintenance
         MAINTENANCE = 5,
         TOOLCHANGE = 6
-    };
+    } status_type;
 } entity;
 
 // signatures
 
 bool entityInit(entity *);
 bool entityMake(entity *);
-bool entityRun(entity *);
-bool entityStop(entity *);
-bool entitySetStatus(entity *, int8_t) ;
+int8_t entityRun(entity *);
+int8_t entityStop(entity *);
+int8_t entitySetStatus(entity *, int8_t) ;
 int8_t entityGetStatus(entity *);
 bool entityIsEmpty(entity *);
 
