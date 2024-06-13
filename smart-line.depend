@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1717505180 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdlib.h>
+	<math.h>
+	<limits.h>
+	<stdbool.h>
+	<stddef.h>
+	<string.h>
+	<assert.h>
+	"smartline.h"
+
+1717504701 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.c
+	<assert.h>
+	<stdint.h>
+	"entity.h"
+
+1717504302 c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.h
+	<stdint.h>
+	<stdbool.h>
+
+1717505183 c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\smartline.h
+	"entity.h"
+
