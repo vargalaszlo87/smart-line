@@ -63,7 +63,9 @@ typedef struct _entity {
         OUTWAITING = 4,
         // maintenance
         MAINTENANCE = 5,
-        TOOLCHANGE = 6
+        TOOLCHANGE = 6,
+        // other
+        THROUGH = 7,
     } status_type;
 } entity;
 

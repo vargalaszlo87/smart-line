@@ -91,13 +91,16 @@ bool entityTakt(entity *this) {
 }
 
 
-bool entityRunning(entity *this) {    while (true) {
+bool entityRunning(entity *this) {
+
+    while (true) {
 
 /*
     DEV TODO:
         - check:
             - ha a status szerint fut, akkor kilep
             - ha ures akkor
+            - blokkolt a bemenete a következõ elemnek?
 */
 
 
@@ -105,14 +108,24 @@ bool entityRunning(entity *this) {    while (true) {
         if (entityGetStatus(this) != RUN)
             break;
         // check
-            // ha üres --> continue
-            if (entityIsEmpty(this))
-                continue;
-            // blokkolt a bemenete a következõ elemnek?
-            //if ()
+        if (entityIsEmpty(this))                    // ha üres --> continue
+            continue;
 
 
 
+        // az idő iszkolása
+        /* pseudo code
+
+            if belso ora = nulla                    // most indult / vagy nullázva a belső óra
+
+            else if (belso ora < takt ido)          // termeles
+
+            else                                    // lejrat az ido
+        */
+
+
+
+        */
     }
     return true;
 }
@@ -147,5 +160,10 @@ int8_t entitySetStatus(entity *this, int8_t status) {
 
 int8_t entityGetStatus(entity *this) {
     return this->status;
+}
+
+bool shiftRight(entity *this) {
+
+
 }
 
