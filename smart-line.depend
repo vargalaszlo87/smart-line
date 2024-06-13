@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1717505180 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\main.c
+1718280122 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdlib.h>
@@ -11,15 +11,18 @@
 	<assert.h>
 	"smartline.h"
 
-1717504701 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.c
+1718280223 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.c
 	<assert.h>
 	<stdint.h>
 	"entity.h"
+	"smartline.h"
 
-1717504302 c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.h
+1718280274 c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.h
 	<stdint.h>
 	<stdbool.h>
 
 1717505183 c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\smartline.h
 	"entity.h"
+
+1718280861 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\message.c
 

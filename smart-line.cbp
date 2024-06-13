@@ -31,9 +31,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="entity.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="entity.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="message.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="smartline.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

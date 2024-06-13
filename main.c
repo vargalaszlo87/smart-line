@@ -32,23 +32,33 @@ int main(int argc, char *argv[]) {
     smartLineInit(&set);
 
 
-    entity e1;
-
-    strncpy(e1.name, "AF10", 4);
-
-    e1.ID.own = 10;
-    e1.ID.previus = 9;
-    e1.ID.next = 11;
-    e1.type = MACHINE;
-    e1.capacity.inWaiting = 1;
-    e1.capacity.working = 4;
-    e1.capacity.outWaiting = 1;
-    e1.time.job = 32.4;
-    e1.status = RUN;
+    entity machineA;
 
 
-    entityMake(&e1);
-    printf ("Üres? :%d", entityIsEmpty(&e1));
+    // Setp 1: interface
+    machineA.interface.type = TYPE_11;
+    machineA.interface.inSize = 1;
+    machineA.interface.outSize = 1;
+    entityInit(&machineA);
+
+    strncpy(machineA.name, "AF10", 4);
+
+    machineA.ID.own = 10;
+//    machineA.ID.previus = {9};
+//    machineA.ID.next = {11};
+    machineA.type = MACHINE;
+    // capcaity
+    machineA.capacity.inWaiting = 1;
+    machineA.capacity.working = 4;
+    machineA.capacity.outWaiting = 1;
+    machineA.time.job = 32.4;
+    machineA.status = RUN;
+
+
+    entityMake(&machineA);
+
+
+    printf ("Üres? :%d", entityIsEmpty(&machineA));
 
 
     return 0;
