@@ -4,9 +4,6 @@
 #include "entity.h"
 #include "smartline.h"
 
-
-extern setup* psetup;
-
 bool entityInit(entity *this) {
 
 /*
@@ -87,7 +84,7 @@ bool entityMake(entity *this) {
 }
 
 bool entityTakt(entity *this) {
-    return (this->time.job - this->time.counter == psetup->incrementum) ? true : false;
+    return (this->time.job - this->time.counter == psmartline->timeIncrementum) ? true : false;
 }
 
 
@@ -125,7 +122,7 @@ bool entityRunning(entity *this) {
 
 
 
-        */
+
     }
     return true;
 }

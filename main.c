@@ -14,22 +14,15 @@
 // debug
 #define NDEBUG
 
-// presetup
-#define INCREMENTUM 0.1
 
-
-
-void smartLineInit(setup *s) {
-    psetup = s;
-}
 
 int main(int argc, char *argv[]) {
 
     // smartLINE setup
-    setup set;
-    set.incrementum = 0.1;
+    smartline smart;
+    smart.timeIncrementum = 0.1;
 
-    smartLineInit(&set);
+    smartLineInit(&smart);
 
 
     // Machine A ------------------------

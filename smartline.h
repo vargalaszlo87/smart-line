@@ -3,10 +3,12 @@
 
 #include "entity.h"
 
-typedef struct _setup {
-    double incrementum;
-} setup;
-static setup* psetup;
+typedef struct _smartline {
+    double timeIncrementum;
+    double sysTime;
+    double Tick;
+} smartline;
 
+static smartline* psmartline;
 
 #endif // SMARTLINE_H_INCLUDED
