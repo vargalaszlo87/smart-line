@@ -41,6 +41,13 @@
 		<Unit filename="message.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="process.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="process.h" />
+		<Unit filename="smartline.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="smartline.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
