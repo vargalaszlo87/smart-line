@@ -161,6 +161,6 @@ int8_t entityGetStatus(entity *this) {
 
 bool shiftRight(entity *this) {
 
-
+    return true;
 }
 

@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <assert.h>
+#include <pthread.h>
 
 // app
 #include "smartline.h"
@@ -58,6 +59,7 @@ int main(int argc, char *argv[]) {
 
 
 
+    smartLineMake();
 
     printf ("Üres? :%d", entityIsEmpty(&machineA));
 

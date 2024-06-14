@@ -6,7 +6,9 @@
 typedef struct _smartline {
     double timeIncrementum;
     double sysTime;
-    double Tick;
+    double sysTick;
+    unsigned int16_t entitySize;
+    unsigned int16_t* entityID;
 } smartline;
 
 static smartline* psmartline;
