@@ -93,7 +93,7 @@ bool entityMake(entity *this) {
 }
 
 bool entityTakt(entity *this) {
-    return (this->time.cycleTime - this->time.cycleTimeCounter == psmartline->timeIncrementum) ? true : false;
+    return (this->time.cycleTime - this->time.cycleTimeCounter == psmartline->timerIncrementum) ? true : false;
 }
 
 

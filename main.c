@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <semaphore.h>
 
 // app
 #include "smartline.h"
@@ -16,13 +17,11 @@
 // debug
 #define NDEBUG
 
-
-
 int main(int argc, char *argv[]) {
 
     // smartLINE setup
     smartline smart;
-    smart.timeIncrementum = 0.1;
+    smart.timerIncrementum = 0.1;
 
     smartLineInit(&smart);
 
@@ -58,13 +57,11 @@ int main(int argc, char *argv[]) {
     entityMake(&machineA);
     // ----------------------------------
 
-
-
-
-    smartLineMake();
+    smartLineMake(&smart);
 
     printf ("Üres? :%d", entityIsEmpty(&machineA));
 
 
+    while (1) {}
     return 0;
 }

@@ -1,4 +1,5 @@
 #include <pthread.h>
+#include <semaphore.h>
 #include <time.h>
 #include <stdio.h>
 
@@ -9,12 +10,15 @@
 
 typedef struct _smartline {
     // time
-    double timeIncrementum;
+    double timerIncrementum;
     double sysTime;
-    double sysTick;
+    int sysTick;
     pthread_t sysTimerThread;
+//  pthread_mutex_t sysTimeThreadMutex;  -- later
+    sem_t sysTimeThreadMutex;
     clock_t startTimer;
     clock_t endTimer;
+    double totalTimer;
     // entity
     int16_t entitySize;
     int16_t* entityID;
