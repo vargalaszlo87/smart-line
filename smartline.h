@@ -1,14 +1,23 @@
+#include <pthread.h>
+#include <time.h>
+#include <stdio.h>
+
 #ifndef SMARTLINE_H_INCLUDED
 #define SMARTLINE_H_INCLUDED
 
 #include "entity.h"
 
 typedef struct _smartline {
+    // time
     double timeIncrementum;
     double sysTime;
     double sysTick;
-    unsigned int16_t entitySize;
-    unsigned int16_t* entityID;
+    pthread_t sysTimerThread;
+    clock_t startTimer;
+    clock_t endTimer;
+    // entity
+    int16_t entitySize;
+    int16_t* entityID;
 } smartline;
 
 static smartline* psmartline;

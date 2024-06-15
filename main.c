@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <assert.h>
+#include <unistd.h>
 #include <pthread.h>
 
 // app
@@ -43,13 +44,14 @@ int main(int argc, char *argv[]) {
     machineA.ID.previus[0] = 9;
     machineA.ID.next[0] = 11;
 
-    // Step 3: set capacity of machine
+    // Step 3: set capacity and time of machine
     machineA.capacity.inWaiting = 1;
     machineA.capacity.working = 4;
     machineA.capacity.outWaiting = 1;
+    machineA.time.cycleTime = 48.6;
 
     // Step 4: set process parameters
-    machineA.time.job = 32.4;
+    machineA.time.cycleTime = 32.4;
     machineA.status = RUN;
 
     // Start

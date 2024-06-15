@@ -9,7 +9,16 @@ bool entityInit(entity *this) {
 /*
     DEV TODO:
         - Az interface típusától függően a ki és bemeneti mennyiségek beállítása
+        - Belso szamlalok beallitasa
 */
+
+    // TIME section
+    this -> time.cycleTimeCounter = 0;
+    this -> time.upTime = 0;
+    this -> time.downTime = 0;
+
+    // STATUS section
+    this -> status = RUN;
 
     // INTERFACE section
     #ifdef NDEBUG
@@ -43,7 +52,7 @@ bool entityInit(entity *this) {
     this->ID.next = (uint16_t*)calloc(o, sizeof(uint16_t));
     if (!this -> ID.previus || !this -> ID.next) {
         #ifdef NDEBUG
-            sprintf (stderr, "> Problem with memory allocation. (entitInit)");
+            sprintf (stderr, "> Problem with memory allocation. (entityInit)");
         #endif
         message("entityInit_DEFAULT_ERROR");
         return false;
@@ -84,7 +93,7 @@ bool entityMake(entity *this) {
 }
 
 bool entityTakt(entity *this) {
-    return (this->time.job - this->time.counter == psmartline->timeIncrementum) ? true : false;
+    return (this->time.cycleTime - this->time.cycleTimeCounter == psmartline->timeIncrementum) ? true : false;
 }
 
 
