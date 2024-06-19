@@ -36,10 +36,11 @@
 	<stdint.h>
 	<stdbool.h>
 
-1718466468 c:\users\daemon\documents\github\smart-line\smartline.h
+1718822728 c:\users\daemon\documents\github\smart-line\smartline.h
 	<pthread.h>
 	<semaphore.h>
 	<time.h>
+	<unistd.h>
 	<stdio.h>
 	"entity.h"
 
@@ -58,7 +59,7 @@
 	<stddef.h>
 	<stdbool.h>
 
-1718466443 source:c:\users\daemon\documents\github\smart-line\smartline.c
+1718823919 source:c:\users\daemon\documents\github\smart-line\smartline.c
 	"smartline.h"
 
 1718462120 source:c:\users\daemon\documents\github\smart-line\main.c
