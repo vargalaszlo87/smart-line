@@ -1,7 +1,5 @@
 #include "smartline.h"
 
-#define NDEBUG
-
 #ifdef __linux__
 void sysTimerHandler(int signal, siginfo_t *si, void *uc)
 #elif _WIN32 || _WIN64
@@ -80,7 +78,11 @@ bool sysTimerStart(smartline *this) {
 }
 
 void smartLineInit(smartline *s) {
+    // static variable
     psmartline = s;
+    // entity array
+    s->entitySize = 0;
+    s->entityCapcaity = 2;
 }
 
 bool smartLineMake(smartline *this) {
@@ -88,7 +90,6 @@ bool smartLineMake(smartline *this) {
     // timer
     this->timerDivider = 1.0;
     sysTimerStart(this);
-
 
     pthread_exit(NULL);
     return true;

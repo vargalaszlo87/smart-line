@@ -8,6 +8,8 @@
 #define M_PI 3.1415926535
 #endif
 
+#include "smartline.h"
+
 typedef struct _entity {
     // ID
     char name[128];
@@ -74,7 +76,7 @@ typedef struct _entity {
 // signatures
 
 bool entityInit(entity *);
-bool entityMake(entity *);
+//bool entityMake(entity *, smartline *);
 int8_t entityRun(entity *);
 int8_t entityStop(entity *);
 int8_t entitySetStatus(entity *, int8_t) ;

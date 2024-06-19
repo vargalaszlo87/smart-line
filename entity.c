@@ -2,7 +2,64 @@
 #include <stdint.h>
 
 #include "entity.h"
-#include "smartline.h"
+
+/*
+
+DEV
+
+// Új elem hozzáadása a dinamikus tömbhöz
+void add_element(DynamicArray *arr, int element) {
+    // Ha a tömb megtelt, újraméretezzük
+    if (arr->size == arr->capacity) {
+        arr->capacity *= 2; // Kétszeresére növeljük a kapacitást
+        arr->array = (int *)realloc(arr->array, arr->capacity * sizeof(int));
+        if (arr->array == NULL) {
+            perror("Failed to realloc memory");
+            exit(EXIT_FAILURE);
+        }
+    }
+    // Új elem hozzáadása a tömbhöz
+    arr->array[arr->size++] = element;
+}
+
+DEV 2
+
+#include <stdio.h>
+
+void megnovel(int* ptr) {
+   (*ptr)++;
+}
+
+int main() {
+    int var1 = 42;
+    float var2 = 3.14;
+    char var3 = 'a';
+
+    // Tömb pointerek tárolására
+    void* pointers[3];
+
+    // Pointerek hozzáadása a tömbhöz
+    pointers[0] = &var1;
+    pointers[1] = &var2;
+    pointers[2] = &var3;
+
+    // Kiírjuk a tömbben tárolt címeket
+    for (int i = 0; i < 3; i++) {
+        printf("Pointer %d address: %p\n", i, pointers[i]);
+    }
+
+    megnovel (pointers[0]);
+
+    // Kiírjuk a tényleges értékeket a pointereken keresztül
+    printf("Value of var1: %d\n", *(int*)pointers[0]);
+    printf("Value of var2: %.2f\n", *(float*)pointers[1]);
+    printf("Value of var3: %c\n", *(char*)pointers[2]);
+
+    return 0;
+}
+
+*/
+
 
 bool entityInit(entity *this) {
 
@@ -63,12 +120,16 @@ bool entityInit(entity *this) {
     return true;
 }
 
-bool entityMake(entity *this) {
+bool entityMake(entity *this, smartline *s) {
 
 /*
     DEV TODO:
+        - adja hozzá a smartline-hoz az ID-t.
         - Foglalja le a memóriát az gépen belüli FIFO-hoz, inWaiting + working + outWaiting mennyiségek alapján
 */
+
+    // extern:SMARTLINE section
+    s->entitySize++;
 
     // CAPACITY section
     #ifdef NDEBUG

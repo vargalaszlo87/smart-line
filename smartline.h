@@ -25,10 +25,21 @@ typedef struct _smartline {
     struct sigaction sa;
     #endif
     // entity
+    int16_t entityCapcaity;
     int16_t entitySize;
     int16_t* entityID;
 } smartline;
 
 static smartline* psmartline;
+
+#ifdef __linux__
+void sysTimerHandler(int , siginfo_t *, void *);
+#elif _WIN32 || _WIN64
+void sysTimerHandler();
+#endif
+void* sysTimer(void *);
+bool sysTimerStart(smartline *);
+void smartLineInit(smartline *);
+bool smartLineMake(smartline *);
 
 #endif // SMARTLINE_H_INCLUDED

@@ -14,8 +14,6 @@
 // app
 #include "smartline.h"
 
-// debug
-#define NDEBUG
 
 int main(int argc, char *argv[]) {
 
@@ -29,6 +27,7 @@ int main(int argc, char *argv[]) {
     // Machine A ------------------------
     // Init
     entity machineA;
+
     machineA.type = MACHINE;
 
     // Step 1: defines the interface
@@ -54,12 +53,18 @@ int main(int argc, char *argv[]) {
     machineA.status = RUN;
 
     // Start
-    entityMake(&machineA);
+    entityMake(&machineA, &smart);
     // ----------------------------------
+
+
+    printf ("%d", &machineA);
 
     smartLineMake(&smart);
 
+
+
     printf ("Üres? :%d", entityIsEmpty(&machineA));
+
 
 
     while (1) {}
