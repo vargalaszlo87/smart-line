@@ -11,24 +11,24 @@
 
 typedef struct _smartline {
     // time
-    double timerIncrementum;
-    double timerDivider;
-    double sysTime;
-    int sysTick;
-    pthread_t sysTimerThread;
-//  pthread_mutex_t sysTimeThreadMutex;  -- later
-//  sem_t sysTimeThreadMutex;
-    #ifdef __linux__
-    timer_t timerid;
-    struct sigevent sev;
-    struct itimerspec its;
-    struct sigaction sa;
-    #endif
+        double timerIncrementum;
+        double timerDivider;
+        double sysTime;
+        int sysTick;
+        pthread_t sysTimerThread;
+    //  pthread_mutex_t sysTimeThreadMutex;  -- later
+    //  sem_t sysTimeThreadMutex;
+        #ifdef __linux__
+        timer_t timerid;
+        struct sigevent sev;
+        struct itimerspec its;
+        struct sigaction sa;
+        #endif
     // entity
-    uint16_t entityCapacity;
-    uint16_t entitySize;
-    uint16_t* entityID;
-    void** entityPointer;
+        uint16_t entityCapacity;
+        uint16_t entitySize;
+        uint16_t* entityID;
+        void** entityPointer;
 } smartline;
 
 static smartline* psmartline;

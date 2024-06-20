@@ -173,7 +173,6 @@ bool entityMake(entity *this, smartline *s) {
         message("entityMake_DEFAULT_ERROR");
         return false;
     }
-
     return true;
 }
 
