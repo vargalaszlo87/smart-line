@@ -57,7 +57,8 @@ int main(int argc, char *argv[]) {
     // ----------------------------------
 
 
-    printf ("%d", &machineA);
+    printf ("%d\n", &machineA);
+    printf ("%d\n", smart.entityPointer[0]);
 
     smartLineMake(&smart);
 

@@ -60,6 +60,13 @@ int main() {
 
 */
 
+int generateID(int length) {
+    int out = 0;
+    for (int i = 0; i < length; i++) {
+        out += (1 + rand() % 9) * pow(10, i);
+    }
+    return out;
+}
 
 bool entityInit(entity *this) {
 
@@ -78,6 +85,7 @@ bool entityInit(entity *this) {
     this -> status = RUN;
 
     // INTERFACE section
+    this -> ID.own = generateID(8);
     #ifdef NDEBUG
         assert(this->interface.inSize < UINT32_MAX && this->interface.inSize > 0);
         assert(this->interface.outSize < UINT32_MAX && this->interface.outSize > 0);
@@ -122,13 +130,29 @@ bool entityInit(entity *this) {
 
 bool entityMake(entity *this, smartline *s) {
 
+    void* teszt[3];
+
 /*
     DEV TODO:
-        - adja hozzá a smartline-hoz az ID-t.
-        - Foglalja le a memóriát az gépen belüli FIFO-hoz, inWaiting + working + outWaiting mennyiségek alapján
+        - OK adja hozzá a smartline-hoz az ID-t.
+        - OK Foglalja le a memóriát az gépen belüli FIFO-hoz, inWaiting + working + outWaiting mennyiségek alapján
 */
 
-    // extern:SMARTLINE section
+    // extern : SMARTLINE section
+    if (s->entitySize == s->entityCapacity) {
+        s->entityCapacity *= 2;
+        s->entityID = (uint16_t*)realloc(s->entityID, s->entityCapacity * sizeof(uint16_t));
+        s->entityPointer = (void *)realloc(s->entityPointer, s->entityCapacity * sizeof(void));
+        if (!s->entityID || !s->entityPointer) {
+            #ifdef NDEBUG
+                sprintf (stderr, "> Problem with memory re-allication. (Entity Make)");
+            #endif // NDEBUG
+            message("eneityMake_DEFAULT_ERROR");
+            return false;
+        }
+    }
+    s->entityPointer[s->entitySize] = this;
+    s->entityID[s->entitySize] = this ->ID.own;
     s->entitySize++;
 
     // CAPACITY section

@@ -20,6 +20,10 @@ void message(char *message) {
     --------------
         smartLineMake_DEFAULT_ERROR             Problema a satobbi...
 
+    smartLineInit:
+    --------------
+    smartLineInit_DEFAULT_ERROR                 Problema a satobbi...
+
 
 
 */

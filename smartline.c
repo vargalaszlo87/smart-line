@@ -82,7 +82,16 @@ void smartLineInit(smartline *s) {
     psmartline = s;
     // entity array
     s->entitySize = 0;
-    s->entityCapcaity = 2;
+    s->entityCapacity = 2;
+    s->entityPointer = (void*)calloc(s->entityCapacity, sizeof(void));
+    s->entityID = (uint16_t*)calloc(s->entityCapacity, sizeof(uint16_t));
+    if (!s->entityPointer || !s->entityID) {
+        #ifdef NDEBUG
+            sprintf (stderr, "> Problem with SmartLineInit method");
+        #endif // NDEBUG
+        message("smartLineInit_DEFAULT_ERROR");
+        return false;
+    }
 }
 
 bool smartLineMake(smartline *this) {
