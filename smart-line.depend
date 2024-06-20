@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1718874655 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\main.c
+1718898845 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdlib.h>
@@ -14,18 +14,18 @@
 	<semaphore.h>
 	"smartline.h"
 
-1718874599 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.c
+1718878213 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.c
 	<assert.h>
 	<stdint.h>
 	"entity.h"
 	<stdio.h>
 
-1718860567 c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.h
+1718875277 c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.h
 	<stdint.h>
 	<stdbool.h>
 	"smartline.h"
 
-1718874607 c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\smartline.h
+1718897404 c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\smartline.h
 	<pthread.h>
 	<semaphore.h>
 	<time.h>
@@ -93,6 +93,6 @@
 	<stddef.h>
 	<stdbool.h>
 
-1718868297 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\smartline.c
+1718898805 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\smartline.c
 	"smartline.h"
 

@@ -57,17 +57,40 @@ int main(int argc, char *argv[]) {
     // ----------------------------------
 
 
-    printf ("%d\n", &machineA);
-    printf ("%d\n", smart.entityPointer[0]);
+    entity machineB;
+    machineB.type = MACHINE;
+
+    // Step 1: defines the interface
+    machineB.interface.type = TYPE_11;
+    machineB.interface.inSize = 1;
+    machineB.interface.outSize = 1;
+    entityInit(&machineB);
+
+    // Step 2: set name and IDs
+    strncpy(machineB.name, "AF20", 4);
+    machineB.ID.own = 12;
+    machineB.ID.previus[0] = 11;
+    machineB.ID.next[0] = 13;
+
+    // Step 3: set capacity and time of machine
+    machineB.capacity.inWaiting = 1;
+    machineB.capacity.working = 4;
+    machineB.capacity.outWaiting = 1;
+    machineB.time.cycleTime = 48.6;
+
+    // Step 4: set process parameters
+    machineB.time.cycleTime = 32.4;
+    machineB.status = RUN;
+
+    entityMake(&machineB, &smart);
+
+
+    printf ("Smartline: %d\n\nMachineA: %d\nMachineB: %d",&smart, &machineA, &machineB);
+
 
     smartLineMake(&smart);
 
 
-
-    printf ("Üres? :%d", entityIsEmpty(&machineA));
-
-
-
-    while (1) {}
+   // while (1) {}
     return 0;
 }

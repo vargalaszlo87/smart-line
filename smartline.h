@@ -9,6 +9,8 @@
 
 #include "entity.h"
 
+pthread_mutex_t lock;
+
 typedef struct _smartline {
     // time
         double timerIncrementum;

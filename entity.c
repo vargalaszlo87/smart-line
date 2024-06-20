@@ -130,8 +130,6 @@ bool entityInit(entity *this) {
 
 bool entityMake(entity *this, smartline *s) {
 
-    void* teszt[3];
-
 /*
     DEV TODO:
         - OK adja hozzá a smartline-hoz az ID-t.
@@ -180,46 +178,6 @@ bool entityTakt(entity *this) {
     return (this->time.cycleTime - this->time.cycleTimeCounter == psmartline->timerIncrementum) ? true : false;
 }
 
-
-bool entityRunning(entity *this) {
-
-    while (true) {
-
-/*
-    DEV TODO:
-        - check:
-            - ha a status szerint fut, akkor kilep
-            - ha ures akkor
-            - blokkolt a bemenete a következõ elemnek?
-*/
-
-
-        // command
-        if (entityGetStatus(this) != RUN)
-            break;
-        // check
-        if (entityIsEmpty(this))                    // ha üres --> continue
-            continue;
-
-
-
-        // az idő iszkolása
-        /* pseudo code
-
-            if belso ora = nulla                    // most indult / vagy nullázva a belső óra
-
-            else if (belso ora < takt ido)          // termeles
-
-            else                                    // lejrat az ido
-        */
-
-
-
-
-    }
-    return true;
-}
-
 bool entityIsEmpty(entity *this) {
     uint64_t length = this->capacity.inWaiting + this->capacity.outWaiting + this->capacity.working;
     uint32_t i = 0;
@@ -257,3 +215,42 @@ bool shiftRight(entity *this) {
     return true;
 }
 
+bool entityJob(entity *this) {
+
+    printf ("meghivva...ez az id: %d\n", this->ID.own);
+
+
+
+
+
+/*
+    DEV TODO:
+        - check:
+            - ha a status szerint fut, akkor kilep
+            - ha ures akkor
+            - blokkolt a bemenete a következõ elemnek?
+*/
+
+/*
+        // command
+        if (entityGetStatus(this) != RUN)
+            break;
+        // check
+        if (entityIsEmpty(this))                    // ha üres --> continue
+            continue;
+*/
+
+
+        // az idő iszkolása
+        /* pseudo code
+
+            if belso ora = nulla                    // most indult / vagy nullázva a belső óra
+
+            else if (belso ora < takt ido)          // termeles
+
+            else                                    // lejrat az ido
+        */
+
+
+    return true;
+}
