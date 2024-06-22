@@ -18,14 +18,15 @@
 int main(int argc, char *argv[]) {
 
 
-    // smartLINE setup
+
+// smartLINE Init
     smartline smart;
     smart.timerIncrementum = 0.1;
 
     smartLineInit(&smart);
 
 
-    // Machine A ------------------------
+// Machine A ------------------------
     // Init
     entity machineA;
 
@@ -46,18 +47,18 @@ int main(int argc, char *argv[]) {
     // Step 3: set capacity and time of machine
     machineA.capacity.inWaiting = 1;
     machineA.capacity.working = 4;
-    machineA.capacity.outWaiting = 1;
-    machineA.time.cycleTime = 48.6;
+    machineA.capacity.outWaiting = 2;
 
     // Step 4: set process parameters
-    machineA.time.cycleTime = 32.4;
+    machineA.time.cycleTime = 8.4;
     machineA.status = RUN;
 
-    // Start
+    // Make
     entityMake(&machineA, &smart);
     // ----------------------------------
 
-
+// Machine B ------------------------
+    // Init
     entity machineB;
     machineB.type = MACHINE;
 
@@ -74,21 +75,26 @@ int main(int argc, char *argv[]) {
     machineB.ID.next[0] = 13;
 
     // Step 3: set capacity and time of machine
-    machineB.capacity.inWaiting = 1;
-    machineB.capacity.working = 4;
+    machineB.capacity.inWaiting = 2;
+    machineB.capacity.working = 3;
     machineB.capacity.outWaiting = 1;
-    machineB.time.cycleTime = 48.6;
 
     // Step 4: set process parameters
-    machineB.time.cycleTime = 32.4;
+    machineB.time.cycleTime = 6.4;
     machineB.status = RUN;
 
+
+    // Make
     entityMake(&machineB, &smart);
 
 
 
 
-    smartLineMake(&smart);
+
+// SmartLINE start
+    smartLineStart(&smart);
+
+
 
 
    // while (1) {}

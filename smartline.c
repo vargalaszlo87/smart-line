@@ -113,12 +113,13 @@ bool smartLineInit(smartline *s) {
     return true;
 }
 
-bool smartLineMake(smartline *this) {
+bool smartLineStart(smartline *this) {
 
     // timer
     this->timerDivider = 1.0;
     this->sysTime = 0.0;
     sysTimerStart(this);
+
 
     pthread_exit(NULL);
     return true;

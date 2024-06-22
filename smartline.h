@@ -43,6 +43,6 @@ bool sysTimerHandler();
 void* sysTimer(void *);
 bool sysTimerStart(smartline *);
 bool smartLineInit(smartline *);
-bool smartLineMake(smartline *);
+bool smartLineStart(smartline *);
 
 #endif // SMARTLINE_H_INCLUDED

@@ -10,6 +10,8 @@
 
 #include "smartline.h"
 
+extern smartline* psmartline;
+
 typedef struct _entity {
     // ID
         char name[128];
@@ -46,6 +48,9 @@ typedef struct _entity {
             uint32_t outWaiting;        // amennyi gepen belul van, de mar munkaciklus utan
             uint32_t *itemBool;         // gepen beluli a FIFO Queue Boolean
             uint32_t *itemID;           // gepen belul az ID-k
+            // mask
+            uint32_t mask;
+            uint32_t maskPO;
         } capacity;
         struct _time {
             float cycleTime;            // munkaciklus ideje .1s felbontassal
@@ -63,14 +68,21 @@ typedef struct _entity {
             // normal
             STOP = 1,                   // all
             RUN = 2,                    // termel
-            INWAITING = 3,              // bemenetre varakozik
-            OUTWAITING = 4,             // kimenetre varakozik
+            PAUSE = 3,                  // szunet
+            INWAITING = 4,              // bemenetre varakozik
+            OUTWAITING = 5,             // kimenetre varakozik
             // maintenance
-            MAINTENANCE = 5,            // karbantartas
-            TOOLCHANGE = 6,             // szerszamcsere
+            MAINTENANCE = 6,            // karbantartas
+            TOOLCHANGE = 7,             // szerszamcsere
             // other
-            THROUGH = 7,                // atengedo uzem
-    } status_type;
+            THROUGH = 8                 // atengedo uzem
+        } status_type;
+        uint8_t load;
+        enum {
+            EMPTY = 0,
+            FULL = 1,
+            HALF = 2
+        } load_type;
 } entity;
 
 // signatures
@@ -81,6 +93,6 @@ int8_t entityRun(entity *);
 int8_t entityStop(entity *);
 int8_t entitySetStatus(entity *, int8_t) ;
 int8_t entityGetStatus(entity *);
-bool entityIsEmpty(entity *);
+bool entityLoad(entity *, uint8_t);
 
 #endif // ENTITY_H_INCLUDED

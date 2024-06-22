@@ -19,7 +19,7 @@ bool takeItem() {
 // process01
 //
 void process01(smartline* this) {
-    for (int i = 0; i < this->entitySize; i++) {
-        entityJob(this->entityPointer[i]);
+    for (int i = this->entitySize - 1 ; i >= 0; i--) {
+        entityJob(this->entityPointer[i], this);
     }
 }
