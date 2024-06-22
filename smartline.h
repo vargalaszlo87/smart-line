@@ -4,22 +4,22 @@
 #include <unistd.h>
 #include <stdio.h>
 
+#include "entity.h"
+
 #ifndef SMARTLINE_H_INCLUDED
 #define SMARTLINE_H_INCLUDED
-
-#include "entity.h"
 
 //pthread_mutex_t lock;
 
 typedef struct _smartline {
+    // thread
+        pthread_t sysTimerThread;
+        pthread_mutex_t lock;
     // time
         double timerIncrementum;
         double timerDivider;
         double sysTime;
         int sysTick;
-        pthread_t sysTimerThread;
-        pthread_mutex_t lock;
-    //  sem_t sysTimeThreadMutex;
         #ifdef __linux__
         timer_t timerid;
         struct sigevent sev;
@@ -42,7 +42,7 @@ bool sysTimerHandler();
 #endif
 void* sysTimer(void *);
 bool sysTimerStart(smartline *);
-void smartLineInit(smartline *);
+bool smartLineInit(smartline *);
 bool smartLineMake(smartline *);
 
 #endif // SMARTLINE_H_INCLUDED

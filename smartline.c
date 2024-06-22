@@ -1,18 +1,5 @@
 #include "smartline.h"
 
-extern entityJob();
-
-void dev() {
-
-    smartline* p = &psmartline;
-
-        //printf ("lacika...%d\n",(int)p->entityCapacity);
-
-    for (int i = 0; i < p->entitySize; i++) {
-        entityJob(p->entityPointer[i]);
-    }
-}
-
 #ifdef __linux__
 bool sysTimerHandler(int signal, siginfo_t *si, void *uc)
 #elif _WIN32 || _WIN64
@@ -32,9 +19,7 @@ bool sysTimerHandler() {
         printf ("sysTick: %d \n",p->sysTick);
         printf ("sysTime: %lf \n",p->sysTime);
     #endif
-    for (int i = 0; i < this->entitySize; i++) {
-        entityJob(this->entityPointer[i]);
-    }
+    process01(this);
 }
 
 void* sysTimer(void *arg) {
@@ -100,9 +85,12 @@ bool sysTimerStart(smartline *this) {
     return true;
 }
 
-void smartLineInit(smartline *s) {
+bool smartLineInit(smartline *s) {
     // static variable
     psmartline = s;
+    // sys variables
+    s->sysTick = 0;
+    s->sysTime = 0.0;
     // entity array
     s->entitySize = 0;
     s->entityCapacity = 2;
@@ -110,15 +98,19 @@ void smartLineInit(smartline *s) {
     s->entityID = (uint16_t*)calloc(s->entityCapacity, sizeof(uint16_t));
     if (!s->entityPointer || !s->entityID) {
         #ifdef NDEBUG
-            sprintf (stderr, "> Problem with SmartLineInit method");
-        #endif // NDEBUG
+            sprintf (stderr, "> Problem with SmartLineInit method (Allocation)");
+        #endif
         message("smartLineInit_DEFAULT_ERROR");
         return false;
     }
     if (pthread_mutex_init(&s->lock, NULL) != 0) {
-        fprintf (stderr, "Hiba a mutex inicializalasnal.");
+        #ifdef NDEBUG
+            fprintf (stderr, "> Problem with SmartLineInit method (mutex_init)");
+        #endif
+        message ("smartLineInit_DEFAUL_ERROR");
+        return false;
     }
-
+    return true;
 }
 
 bool smartLineMake(smartline *this) {

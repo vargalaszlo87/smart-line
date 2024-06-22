@@ -5,23 +5,6 @@
 
 /*
 
-DEV
-
-// Új elem hozzáadása a dinamikus tömbhöz
-void add_element(DynamicArray *arr, int element) {
-    // Ha a tömb megtelt, újraméretezzük
-    if (arr->size == arr->capacity) {
-        arr->capacity *= 2; // Kétszeresére növeljük a kapacitást
-        arr->array = (int *)realloc(arr->array, arr->capacity * sizeof(int));
-        if (arr->array == NULL) {
-            perror("Failed to realloc memory");
-            exit(EXIT_FAILURE);
-        }
-    }
-    // Új elem hozzáadása a tömbhöz
-    arr->array[arr->size++] = element;
-}
-
 DEV 2
 
 #include <stdio.h>
