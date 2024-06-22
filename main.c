@@ -17,6 +17,7 @@
 
 int main(int argc, char *argv[]) {
 
+
     // smartLINE setup
     smartline smart;
     smart.timerIncrementum = 0.1;
@@ -85,12 +86,12 @@ int main(int argc, char *argv[]) {
     entityMake(&machineB, &smart);
 
 
-    printf ("Smartline: %d\n\nMachineA: %d\nMachineB: %d",&smart, &machineA, &machineB);
 
 
     smartLineMake(&smart);
 
 
    // while (1) {}
+   pthread_mutex_destroy(&smart.lock);
     return 0;
 }

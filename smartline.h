@@ -9,7 +9,7 @@
 
 #include "entity.h"
 
-pthread_mutex_t lock;
+//pthread_mutex_t lock;
 
 typedef struct _smartline {
     // time
@@ -18,7 +18,7 @@ typedef struct _smartline {
         double sysTime;
         int sysTick;
         pthread_t sysTimerThread;
-    //  pthread_mutex_t sysTimeThreadMutex;  -- later
+        pthread_mutex_t lock;
     //  sem_t sysTimeThreadMutex;
         #ifdef __linux__
         timer_t timerid;
@@ -36,9 +36,9 @@ typedef struct _smartline {
 static smartline* psmartline;
 
 #ifdef __linux__
-void sysTimerHandler(int , siginfo_t *, void *);
+bool sysTimerHandler(int , siginfo_t *, void *);
 #elif _WIN32 || _WIN64
-void sysTimerHandler();
+bool sysTimerHandler();
 #endif
 void* sysTimer(void *);
 bool sysTimerStart(smartline *);

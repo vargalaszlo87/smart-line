@@ -13,41 +13,43 @@ void dev() {
     }
 }
 
-
 #ifdef __linux__
-void sysTimerHandler(int signal, siginfo_t *si, void *uc)
+bool sysTimerHandler(int signal, siginfo_t *si, void *uc)
 #elif _WIN32 || _WIN64
-void sysTimerHandler(smartline* this) {
+bool sysTimerHandler(smartline* this) {
 #else
-void sysTimerHandler() {
+bool sysTimerHandler() {
 #endif
-        smartline* p = &psmartline;
-        p->sysTick = !p->sysTick;
-        p->sysTime += 0.1;
-        #ifdef NDEBUG
-            printf ("sysTick: %d \n",p->sysTick);
-            printf ("sysTime: %lf \n",p->sysTime);
-        #endif
-        // events
-
-        //dev();
-
+    if (this == NULL) {
+        fprintf (stderr, "NULL pointer...");
+        return false;
+    }
+    pthread_mutex_lock(&this->lock);
+    this->sysTick = !this->sysTick;
+    this->sysTime += 0.1;
+    pthread_mutex_unlock(&this->lock);
+    #ifdef NDEBUG
+        printf ("sysTick: %d \n",p->sysTick);
+        printf ("sysTime: %lf \n",p->sysTime);
+    #endif
+    for (int i = 0; i < this->entitySize; i++) {
+        entityJob(this->entityPointer[i]);
+    }
 }
 
 void* sysTimer(void *arg) {
-    // arg -> to temporary, just a curiosity
     smartline* sysTemp = (smartline*)arg;
+    pthread_mutex_lock(&sysTemp->lock);
     double incrementum = sysTemp -> timerIncrementum;
     double divider = sysTemp -> timerDivider;
+    pthread_mutex_unlock(&sysTemp->lock);
     // timer
     struct timespec ts;
     ts.tv_sec = 0;
     ts.tv_nsec = (long)((incrementum * divider) * 1e9);
-    printf ("\nsysTemp: %d", &sysTemp);
     while (true) {
         nanosleep(&ts, NULL);
-        sysTimerHandler(&sysTemp);
-        //printf ("\n%d\t",(smartline*)&arg);
+        sysTimerHandler(sysTemp);
     }
 }
 
@@ -86,14 +88,14 @@ bool sysTimerStart(smartline *this) {
         return false;
     }
     #elif _WIN32 || _WIN64
-// OK
-    if (pthread_create(&this->sysTimerThread, NULL, sysTimer, this) != 0) {
+    if (pthread_create(&this->sysTimerThread, NULL, sysTimer, (void*)this) != 0) {
         #ifdef NDEBUG
             sprintf (stderr, "> Problem with sysTimer-thread. (pthread_create --> smartLineMake)");
         #endif
         message("smartLineMake_DEFAULT_ERROR");
         return false;
     }
+    pthread_join(this->sysTimerThread, NULL);
     #endif
     return true;
 }
@@ -113,13 +115,17 @@ void smartLineInit(smartline *s) {
         message("smartLineInit_DEFAULT_ERROR");
         return false;
     }
+    if (pthread_mutex_init(&s->lock, NULL) != 0) {
+        fprintf (stderr, "Hiba a mutex inicializalasnal.");
+    }
+
 }
 
 bool smartLineMake(smartline *this) {
 
     // timer
     this->timerDivider = 1.0;
-// OK
+    this->sysTime = 0.0;
     sysTimerStart(this);
 
     pthread_exit(NULL);
