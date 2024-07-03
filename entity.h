@@ -43,6 +43,7 @@ typedef struct _entity {
         } interface;
     // params
         struct _capacity {
+            uint64_t full;              // a teljes kapacitas
             uint32_t working;           // amennyit egyszerre munkal meg
             uint32_t inWaiting;         // amennyi gepen belul van, de meg munkaciklus elott
             uint32_t outWaiting;        // amennyi gepen belul van, de mar munkaciklus utan

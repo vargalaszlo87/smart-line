@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdint.h>
 #include <math.h>
+#include <string.h>
 
 #include "entity.h"
 
@@ -146,9 +147,9 @@ bool entityMake(entity *this, smartline *s) {
     if (this->capacity.working < 1) {
         message("entityMake_CAPACITY_NULL");
     }
-    int length = this->capacity.inWaiting + this->capacity.outWaiting + this->capacity.working;
-    this->capacity.itemBool = (uint32_t*)calloc(length,sizeof(uint32_t));
-    this->capacity.itemID = (uint32_t*)calloc(length,sizeof(uint32_t));
+    this->capacity.full = this->capacity.inWaiting + this->capacity.outWaiting + this->capacity.working;
+    this->capacity.itemBool = (uint32_t*)calloc(this->capacity.full,sizeof(uint32_t));
+    this->capacity.itemID = (uint32_t*)calloc(this->capacity.full,sizeof(uint32_t));
     if (!this -> capacity.itemBool || !this -> capacity.itemID) {
         #ifdef NDEBUG
             sprintf (stderr, "> Problem with memory allocation. (entityMake)");
@@ -158,10 +159,10 @@ bool entityMake(entity *this, smartline *s) {
     }
     // CAPACITY - MASK section
     // mask
-    this->capacity.mask = pow(2,length)-1;
+    this->capacity.mask = pow(2,this->capacity.full)-1;
     // PO mask
     this->capacity.maskPO = 0;
-    for (int i = 0; i < length - this->capacity.inWaiting ; i++) {
+    for (int i = 0; i < this->capacity.full - this->capacity.inWaiting ; i++) {
         this->capacity.maskPO += pow(2,i);
     }
 
@@ -174,22 +175,22 @@ bool entityTakt(entity *this) {
 }
 
 bool entityLoad(entity *this, uint8_t type) {
-    uint64_t length = this->capacity.inWaiting + this->capacity.outWaiting + this->capacity.working;
-    uint32_t i = 0;
+    uint32_t i = 0, j = 0;
     bool isFull = false;
-    while (this->capacity.itemBool[i] < length) {
+    while (j < this->capacity.full) {
         if (this->capacity.itemBool[i] == 1)
             i++;
+        j++;
     }
     switch (type) {
         case FULL:
-            return (length == i) ? true : false;
+            return (this->capacity.full == i) ? true : false;
             break;
         case EMPTY:
             return (i == 0) ? true : false;
             break;
         case HALF:
-            return (i > 0 && i < length) ? true : false;
+            return (i > 0 && i < this->capacity.full) ? true : false;
             break;
         default:
             return false;
@@ -221,10 +222,11 @@ bool shiftRight(entity *this) {
     return true;
 }
 
-bool entityJob(entity *this, smartline *s) {
+void entityJob(entity *this, smartline *s) {
+
 
     //printf ("meghivva...ez az id: %d\n", this->ID.own);
-    printf ("maskPO: %d -> %d\n ",this->ID.own,this->capacity.mask);
+    //printf ("maskPO: %d -> %d\n ",this->ID.own,this->capacity.mask);
 
 
 
@@ -232,9 +234,11 @@ bool entityJob(entity *this, smartline *s) {
 /*
     DEV TODO:
         - check:
-            - ha a status szerint fut, akkor kilep
-            - ha ures akkor
-            - blokkolt a bemenete a következõ elemnek?
+            + ha a status szerint fut, akkor kilep
+            + ha ures akkor
+            + ha ures akkor interface.inputBlocked = false
+            - blokkolt a bemenete a következõ elemnek
+            ! maszkok letrehozasa
 */
 
 /*
@@ -257,20 +261,22 @@ bool entityJob(entity *this, smartline *s) {
             else                                    // lejrat az ido
         */
 
-
         // status
-        if (entityGetStatus(this) != RUN)           // the state of entity is not RUN
+        if (entityGetStatus(this) != RUN) {         // the state of entity is not RUN
             return false;
+        }
         // load
-        if (entityLoad(this, FULL))                 // the load of capacity is FULL
+        if (entityLoad(this, FULL))  {              // the load of capacity is FULL
             return false;
+        }
         else if (entityLoad(this, EMPTY)) {         // the load of capacity is EMPTY
             this->interface.inputBlocked = false;
             return false;
         }
         else {
-
+            printf ("itt??");
         }
+
 
         // most indult vagy nullazva lett
         if (this->time.cycleTimeCounter == 0) {
@@ -292,7 +298,27 @@ bool entityJob(entity *this, smartline *s) {
         pthread_mutex_unlock(&s->lock);
 
 
-
-
-    return true;
+   // return true;
 }
+
+void entityShowContainers(smartline* this) {
+
+
+    printf ("\r");
+    for (int i = 0 ; i < this->entitySize; i++) {
+
+        entity* temp = this->entityPointer[i];
+        for (int j = 0; j < temp->capacity.full ; j++) {
+            printf ("%d",temp->capacity.itemBool[j]);
+        }
+        printf ("\t");
+
+        //printf ("\rLength of continer: %d\n", temp->capacity.full);
+    }
+    fflush(stdout);
+   // printf ("\rLength of continer: %d", this->capacity.full);
+
+}
+
+
+

@@ -38,7 +38,7 @@ static smartline* psmartline;
 #ifdef __linux__
 bool sysTimerHandler(int , siginfo_t *, void *);
 #elif _WIN32 || _WIN64
-bool sysTimerHandler();
+void sysTimerHandler();
 #endif
 void* sysTimer(void *);
 bool sysTimerStart(smartline *);

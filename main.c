@@ -89,12 +89,8 @@ int main(int argc, char *argv[]) {
 
 
 
-
-
-// SmartLINE start
+    // SmartLINE start
     smartLineStart(&smart);
-
-
 
 
    // while (1) {}

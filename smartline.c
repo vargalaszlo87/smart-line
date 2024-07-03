@@ -1,11 +1,11 @@
 #include "smartline.h"
 
 #ifdef __linux__
-bool sysTimerHandler(int signal, siginfo_t *si, void *uc)
+void sysTimerHandler(int signal, siginfo_t *si, void *uc)
 #elif _WIN32 || _WIN64
-bool sysTimerHandler(smartline* this) {
+void sysTimerHandler(smartline* this) {
 #else
-bool sysTimerHandler() {
+void sysTimerHandler() {
 #endif
     if (this == NULL) {
         fprintf (stderr, "NULL pointer...");
@@ -36,6 +36,7 @@ void* sysTimer(void *arg) {
         nanosleep(&ts, NULL);
         sysTimerHandler(sysTemp);
     }
+    printf ("befejezõdött");
 }
 
 bool sysTimerStart(smartline *this) {
@@ -80,8 +81,10 @@ bool sysTimerStart(smartline *this) {
         message("smartLineMake_DEFAULT_ERROR");
         return false;
     }
-    pthread_join(this->sysTimerThread, NULL);
+    else
+        pthread_join(this->sysTimerThread, NULL);
     #endif
+    printf ("A szál befejezõdött...");
     return true;
 }
 
