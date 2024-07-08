@@ -45,6 +45,35 @@ int main() {
 
 */
 
+// others
+
+
+bool shiftRight(entity *this) {
+
+    uint64_t full = this->capacity.full;
+    for (uint64_t i = full - 1; i >= 0 ; i--) {
+        if (!this->capacity.itemBool)   // if not 1, then continue
+            continue;
+        if (i == full) {  // the first of the items
+            if (this->interface.type == TYPE_11 || this->interface.type == TYPE_N1) {   // one output way
+                if (this->ID.next[0])
+
+            }
+            else {  // at least two output ways
+
+
+            }
+
+
+        }
+        else {  // the others of the items
+
+        }
+    }
+
+    return true;
+}
+
 int generateID(int length) {
     int out = 0;
     for (int i = 0; i < length; i++) {
@@ -52,6 +81,8 @@ int generateID(int length) {
     }
     return out;
 }
+
+// entities
 
 bool entityInit(entity *this) {
 
@@ -217,11 +248,6 @@ int8_t entityGetStatus(entity *this) {
     return this->status;
 }
 
-bool shiftRight(entity *this) {
-
-    return true;
-}
-
 void entityJob(entity *this, smartline *s) {
 
 
@@ -269,13 +295,11 @@ void entityJob(entity *this, smartline *s) {
         if (entityLoad(this, FULL))  {              // the load of capacity is FULL
             return false;
         }
-        else if (entityLoad(this, EMPTY)) {         // the load of capacity is EMPTY
+
+        /*else if (entityLoad(this, EMPTY)) {         // the load of capacity is EMPTY
             this->interface.inputBlocked = false;
             return false;
-        }
-        else {
-            printf ("itt??");
-        }
+        }*/
 
 
         // most indult vagy nullazva lett

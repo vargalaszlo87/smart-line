@@ -23,6 +23,6 @@ void process01(smartline* this) {
         entityJob(this->entityPointer[i], this);
     }
     // ide kell majd if
-    entityShowContainers(this);
+    //entityShowContainers(this);
 }
 

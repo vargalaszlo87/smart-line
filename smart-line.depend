@@ -14,10 +14,11 @@
 	<semaphore.h>
 	"smartline.h"
 
-1720015994 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.c
+1720019641 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\entity.c
 	<assert.h>
 	<stdint.h>
 	<math.h>
+	<string.h>
 	"entity.h"
 	<stdio.h>
 
@@ -90,7 +91,7 @@
 	<semaphore.h>
 	"smartline.h"
 
-1720016904 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\process.c
+1720430333 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\process.c
 	"process.h"
 
 1719998939 c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\process.h
