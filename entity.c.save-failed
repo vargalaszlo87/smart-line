@@ -47,40 +47,26 @@ int main() {
 
 // others
 
-void* pointerFromID(smartline* s, uint16_t entityID) {
-    uint16_t indexID = 0;
-    for (indexID = 0 ; indexID < s->entitySize ; indexID++) {
-        if (s->entityID == entityID) {
-            break;
-        }
-    }
-   // printf ("%d - %p\n", entityID, s->entityPointer[indexID]);
-    return s->entityPointer[indexID];
-}
 
-bool shiftRight(entity* this, smartline* s) {
+bool shiftRight(entity *this) {
 
-
- //   pointerFromID(s, this->ID.next[0]);
-
-    for (int i = this->capacity.full - 1; i >= 0 ; i--) {
+    uint64_t full = this->capacity.full;
+    for (uint64_t i = full - 1; i >= 0 ; i--) {
         if (!this->capacity.itemBool)   // if not 1, then continue
             continue;
-        if (i == this->capacity.full - 1) {  // the last of the items
+        if (i == full) {  // the first of the items
             if (this->interface.type == TYPE_11 || this->interface.type == TYPE_N1) {   // one output way
-                // checking the first place of the next entity
-                // i'm the last entity
-                if (s->entityID[s->entitySize-1] == this -> ID.own) {
-                    // waiting for the method takeItem()
-                    continue;
+                if (this->ID.next[0]) {
+
                 }
-                // i'm not the last entity
-                printf ("%d\n--\n", this->ID.next[0]);
-                void* ptr = pointerFromID(s, this->ID.next[0]);
-                printf ("%p\n", ptr);
 
             }
-            else {}  // at least two output ways
+            else {  // at least two output ways
+
+
+            }
+
+
         }
         else {  // the others of the items
 
@@ -267,9 +253,6 @@ int8_t entityGetStatus(entity *this) {
 void entityJob(entity *this, smartline *s) {
 
 
-
-
-
     //printf ("meghivva...ez az id: %d\n", this->ID.own);
     //printf ("maskPO: %d -> %d\n ",this->ID.own,this->capacity.mask);
 
@@ -327,7 +310,7 @@ void entityJob(entity *this, smartline *s) {
 
         }
         else if (this->time.cycleTimeCounter < this->time.cycleTime) {
-              shiftRight(this, s);
+
 
         }
         else {

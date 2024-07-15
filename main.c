@@ -70,9 +70,9 @@ int main(int argc, char *argv[]) {
 
     // Step 2: set name and IDs
     strncpy(machineB.name, "AF20", 4);
-    machineB.ID.own = 12;
-    machineB.ID.previus[0] = 11;
-    machineB.ID.next[0] = 13;
+    machineB.ID.own = 11;
+    machineB.ID.previus[0] = 10;
+    machineB.ID.next[0] = 12;
 
     // Step 3: set capacity and time of machine
     machineB.capacity.inWaiting = 2;
