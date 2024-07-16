@@ -64,7 +64,7 @@ bool shiftRight(entity* this, smartline* s) {
  //   pointerFromID(s, this->ID.next[0]);
 
     for (int i = this->capacity.full - 1; i >= 0 ; i--) {
-        if (!this->capacity.itemBool)   // if not 1, then continue
+        if (!this -> capacity.itemBool[i])   // if not 1, then continue
             continue;
         if (i == this->capacity.full - 1) {  // the last of the items
             if (this->interface.type == TYPE_11 || this->interface.type == TYPE_N1) {   // one output way
@@ -75,14 +75,29 @@ bool shiftRight(entity* this, smartline* s) {
                     continue;
                 }
                 // i'm not the last entity
-                printf ("%d\n--\n", this->ID.next[0]);
-                void* ptr = pointerFromID(s, this->ID.next[0]);
-                printf ("%p\n", ptr);
+                //entity nextEntityPtr = *(entity *)pointerFromID(s, this->ID.next[0]);
+                //void * teszt = pointerFromID(s, this->ID.next[0]);
+                entity* nextEntityPtr = pointerFromID(s, this->ID.next[0]);
+                // if the first stack position of the next entity is not empty, than continue
+                if (nextEntityPtr -> capacity.itemBool[0])
+                    continue;
+                else {
+                    nextEntityPtr -> capacity.itemBool[0] = 1;
+                    this -> capacity.itemBool[i] = 0;
+                    nextEntityPtr -> capacity.itemID[0] = this -> capacity.itemID[i];
+                    this -> capacity.itemID[i] = 0;
+                }
 
             }
-            else {}  // at least two output ways
+            else {} // at least two output ways
         }
         else {  // the others of the items
+            if (!this -> capacity.itemBool[i + 1]) {
+                this -> capacity.itemBool[i + 1] = 1;
+                this -> capacity.itemBool[i] = 0;
+                this -> capacity.itemID[i + 1] = this -> capacity.itemID[i];
+                this -> capacity.itemID[i] = 0;
+            }
 
         }
     }
@@ -90,13 +105,6 @@ bool shiftRight(entity* this, smartline* s) {
     return true;
 }
 
-int generateID(int length) {
-    int out = 0;
-    for (int i = 0; i < length; i++) {
-        out += (1 + rand() % 9) * pow(10, i);
-    }
-    return out;
-}
 
 // entities
 
@@ -266,14 +274,8 @@ int8_t entityGetStatus(entity *this) {
 
 void entityJob(entity *this, smartline *s) {
 
-
-
-
-
-    //printf ("meghivva...ez az id: %d\n", this->ID.own);
-    //printf ("maskPO: %d -> %d\n ",this->ID.own,this->capacity.mask);
-
-
+    // DEV
+    entityShowContainers(s);
 
 
 /*
@@ -296,16 +298,6 @@ void entityJob(entity *this, smartline *s) {
 */
 
 
-        // az idő iszkolása
-        /* pseudo code
-
-            if belso ora = nulla                    // most indult / vagy nullázva a belső óra
-
-            else if (belso ora < takt ido)          // termeles
-
-            else                                    // lejrat az ido
-        */
-
         // status
         if (entityGetStatus(this) != RUN) {         // the state of entity is not RUN
             return false;
@@ -321,17 +313,18 @@ void entityJob(entity *this, smartline *s) {
         }*/
 
 
-        // most indult vagy nullazva lett
-        if (this->time.cycleTimeCounter == 0) {
-
-
-        }
-        else if (this->time.cycleTimeCounter < this->time.cycleTime) {
-              shiftRight(this, s);
+        if (this->time.cycleTimeCounter == 0.0) {                         // starting now or has been reset
+            sendItem(s);
 
         }
-        else {
-            printf ("Lejart az ido...%d\n",this->ID.own);
+        else if (this->time.cycleTimeCounter < this->time.cycleTime) {  // production
+            // DEV
+            shiftRight(this, s);
+        }
+        else {                                                          // end of takt-time
+            // DEV
+            //printf ("(Tick)%d\n",this->ID.own);
+
             this->time.cycleTimeCounter = 0.0;
 
         }
@@ -355,12 +348,8 @@ void entityShowContainers(smartline* this) {
             printf ("%d",temp->capacity.itemBool[j]);
         }
         printf ("\t");
-
-        //printf ("\rLength of continer: %d\n", temp->capacity.full);
     }
     fflush(stdout);
-   // printf ("\rLength of continer: %d", this->capacity.full);
-
 }
 
 

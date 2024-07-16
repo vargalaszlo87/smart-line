@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     machineA.capacity.outWaiting = 2;
 
     // Step 4: set process parameters
-    machineA.time.cycleTime = 8.4;
+    machineA.time.cycleTime = 3.4;
     machineA.status = RUN;
 
     // Make
@@ -80,12 +80,17 @@ int main(int argc, char *argv[]) {
     machineB.capacity.outWaiting = 1;
 
     // Step 4: set process parameters
-    machineB.time.cycleTime = 6.4;
+    machineB.time.cycleTime = 2.4;
     machineB.status = RUN;
 
 
     // Make
     entityMake(&machineB, &smart);
+
+    // DEV
+    printf ("machine A pointer: %p\n", &machineA);
+    printf ("machine B pointer: %p\n\n", &machineB);
+
 
 
 
