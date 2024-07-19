@@ -26,6 +26,24 @@ bool sendItem(smartline* s) {
     return true;
 }
 
+// send
+// sending preparation
+bool send(smartline *s) {
+    double t = 0.0;
+    int tempSysTick = s -> sysTick;
+    while (true) {
+        if (tempSysTick != s -> sysTick) {
+            t += s -> timerIncrementum;
+            tempSysTick = s -> sysTick;
+        }
+        if (t >= s->sendTime) {
+            sendItem(s);
+            t = 0.0;
+        }
+    }
+}
+
+
 // takeItem
 // taking the finished item
 bool takeItem() {

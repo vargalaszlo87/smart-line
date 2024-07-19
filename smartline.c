@@ -38,6 +38,7 @@ void* sysTimer(void *arg) {
     }
 }
 
+// DEV
 bool sysTimerStart(smartline *this) {
 
 
@@ -74,7 +75,7 @@ bool sysTimerStart(smartline *this) {
         return false;
     }
     #elif _WIN32 || _WIN64
-    if (pthread_create(&this->sysTimerThread, NULL, sysTimer, (void*)this) != 0) {
+/*    if (pthread_create(&this->sysTimerThread, NULL, sysTimer, (void*)this) != 0) {
         #ifdef NDEBUG
             sprintf (stderr, "> Problem with sysTimer-thread. (pthread_create --> smartLineMake)");
         #endif
@@ -82,10 +83,10 @@ bool sysTimerStart(smartline *this) {
         return false;
     }
     //else
-    //    pthread_join(this->sysTimerThread, NULL);
+*/    //    pthread_join(this->sysTimerThread, NULL);
     #endif
-    printf ("A szál befejezõdött...");
-    return true;
+
+   return true;
 }
 
 bool smartLineInit(smartline *s) {
@@ -117,50 +118,10 @@ bool smartLineInit(smartline *s) {
 }
 
 void* sysOperator(void* arg) {
-
     smartline* sysOpTemp = (smartline*)arg;
 
-    // DEV
-    double tick = 3.1;
-    double t = 0.0;
-    int tempSysTick = sysOpTemp -> sysTick;
-    while (true) {
-        printf ("%lf ", sysOpTemp -> timerIncrementum);
-        if (tempSysTick != sysOpTemp -> sysTick) {
-            t += 0.1;
-            tempSysTick = sysOpTemp -> sysTick;
-            //sendItem(sysOpTemp);
-            printf ("tikkkk");
-        }
-        if (t >= tick) {
-            printf ("Tick\n");
-            t = 0.0;
-        }
+    // sender start
+    send();
 
-    }
 }
 
-bool sysOperatorStart(smartline* this) {
-    if (pthread_create(&this->sysOperatorThread, NULL, sysOperator, (void*)this) != 0) {
-        #ifdef NDEBUG
-            sprintf (stderr, "> Problem with sysOperator-thread. (pthread_create --> sysOperatorStart)");
-        #endif
-        message("SysOperatorStart_DEFAULT_ERROR");
-        return false;
-    }
-    //else
-    //    pthread_join(this->sysOperatorThread, NULL);
-}
-
-bool smartLineStart(smartline *this) {
-
-    // timer
-    this->timerDivider = 1.0;
-    this->sysTime = 0.0;
-    sysTimerStart(this);
-    sysOperatorStart(this);
-    printf ("faszom");
-
-    //pthread_exit(NULL);
-    return true;
-}

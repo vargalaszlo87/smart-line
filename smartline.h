@@ -12,14 +12,13 @@
 //pthread_mutex_t lock;
 
 typedef struct _smartline {
-    // thread
-        pthread_t sysTimerThread;
-        pthread_t sysOperatorThread;
+    // mutex
         pthread_mutex_t lock;
     // time
         double timerIncrementum;
         double timerDivider;
         double sysTime;
+        double sendTime;
         int sysTick;
         #ifdef __linux__
         timer_t timerid;
@@ -42,8 +41,9 @@ bool sysTimerHandler(int , siginfo_t *, void *);
 void sysTimerHandler();
 #endif
 void* sysTimer(void *);
+void* sysOperator(void* );
 bool sysTimerStart(smartline *);
 bool smartLineInit(smartline *);
-bool smartLineStart(smartline *);
+
 
 #endif // SMARTLINE_H_INCLUDED

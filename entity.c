@@ -300,6 +300,8 @@ void entityJob(entity *this, smartline *s) {
         }
         // load
         if (entityLoad(this, FULL))  {              // the load of capacity is FULL
+            //this->interface.inputBlocked = true;
+            //this->status =
             return false;
         }
 
@@ -318,10 +320,7 @@ void entityJob(entity *this, smartline *s) {
 
         }
         else {                                                          // end of takt-time
-            // DEV
-            //printf ("(Tick)%d\n",this->ID.own);
             shiftRight(this, s);
-            //sendItem(s);
             this->time.cycleTimeCounter = 0.0;
 
         }

@@ -17,6 +17,10 @@
 
 int main(int argc, char *argv[]) {
 
+// threading
+    pthread_t sysTimerThread;
+    pthread_t sysOperatorThread;
+    pthread_mutex_t lock;
 
 
 // smartLINE Init
@@ -95,19 +99,33 @@ int main(int argc, char *argv[]) {
 
 
     // SmartLINE start
-    smartLineStart(&smart);
+//    smartLineStart(&smart);
 
+    // timer init
+    smart.timerDivider = 10.0;  // default: 1.0
+    smart.sysTime = 0.0;
+    smart.sendTime = 7.8;
 
-    /*
-    double t = 0.0;
-    while (true) {
-        printf ("laci");
-        if (t == 2.0) {
-            sendItem(smart);
-            t = 0.0;
-        }
-        t += smart.timerIncrementum;
-    }*/
+    // sysTimer start
+    if (pthread_create(&sysTimerThread, NULL, sysTimer, &smart) != 0) {
+        #ifdef NDEBUG
+            sprintf (stderr, "> Problem with sysTimer-thread. (pthread_create --> smartLineMake)");
+        #endif
+        message("smartLineMake_DEFAULT_ERROR");
+        return false;
+    }
+
+    // sysOperator start
+    if (pthread_create(&sysOperatorThread, NULL, sysOperator, &smart) != 0) {
+        #ifdef NDEBUG
+            sprintf (stderr, "> Problem with sysOperator-thread. (pthread_create --> sysOperatorStart)");
+        #endif
+        message("SysOperatorStart_DEFAULT_ERROR");
+        return false;
+    }
+
+    pthread_join(sysTimerThread, NULL);
+    pthread_join(sysOperatorThread, NULL);
 
 
    // while (1) {}
