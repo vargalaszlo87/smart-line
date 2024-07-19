@@ -50,11 +50,10 @@ int main() {
 void* pointerFromID(smartline* s, uint16_t entityID) {
     uint16_t indexID = 0;
     for (indexID = 0 ; indexID < s->entitySize ; indexID++) {
-        if (s->entityID == entityID) {
+        if (s->entityID[indexID] == entityID) {
             break;
         }
     }
-   // printf ("%d - %p\n", entityID, s->entityPointer[indexID]);
     return s->entityPointer[indexID];
 }
 
@@ -75,8 +74,6 @@ bool shiftRight(entity* this, smartline* s) {
                     continue;
                 }
                 // i'm not the last entity
-                //entity nextEntityPtr = *(entity *)pointerFromID(s, this->ID.next[0]);
-                //void * teszt = pointerFromID(s, this->ID.next[0]);
                 entity* nextEntityPtr = pointerFromID(s, this->ID.next[0]);
                 // if the first stack position of the next entity is not empty, than continue
                 if (nextEntityPtr -> capacity.itemBool[0])
@@ -87,7 +84,6 @@ bool shiftRight(entity* this, smartline* s) {
                     nextEntityPtr -> capacity.itemID[0] = this -> capacity.itemID[i];
                     this -> capacity.itemID[i] = 0;
                 }
-
             }
             else {} // at least two output ways
         }
@@ -314,17 +310,18 @@ void entityJob(entity *this, smartline *s) {
 
 
         if (this->time.cycleTimeCounter == 0.0) {                         // starting now or has been reset
-            sendItem(s);
+
 
         }
         else if (this->time.cycleTimeCounter < this->time.cycleTime) {  // production
             // DEV
-            shiftRight(this, s);
+
         }
         else {                                                          // end of takt-time
             // DEV
             //printf ("(Tick)%d\n",this->ID.own);
-
+            shiftRight(this, s);
+            //sendItem(s);
             this->time.cycleTimeCounter = 0.0;
 
         }
@@ -342,8 +339,8 @@ void entityShowContainers(smartline* this) {
 
     printf ("\r");
     for (int i = 0 ; i < this->entitySize; i++) {
-
         entity* temp = this->entityPointer[i];
+        printf ("%d ", temp->status);
         for (int j = 0; j < temp->capacity.full ; j++) {
             printf ("%d",temp->capacity.itemBool[j]);
         }

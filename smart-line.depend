@@ -37,19 +37,20 @@
 
 1718868139 source:c:\users\gf4hig3\onedrive\eigene dateien\github\smart-line\message.c
 
-1719059476 source:c:\users\daemon\documents\github\smart-line\entity.c
+1721401607 source:c:\users\daemon\documents\github\smart-line\entity.c
 	<assert.h>
 	<stdint.h>
 	<math.h>
+	<string.h>
 	"entity.h"
 	<stdio.h>
 
-1719059407 c:\users\daemon\documents\github\smart-line\entity.h
+1720123335 c:\users\daemon\documents\github\smart-line\entity.h
 	<stdint.h>
 	<stdbool.h>
 	"smartline.h"
 
-1719052901 c:\users\daemon\documents\github\smart-line\smartline.h
+1721412470 c:\users\daemon\documents\github\smart-line\smartline.h
 	<pthread.h>
 	<semaphore.h>
 	<time.h>
@@ -57,7 +58,7 @@
 	<stdio.h>
 	"entity.h"
 
-1719002036 source:c:\users\daemon\documents\github\smart-line\message.c
+1720123335 source:c:\users\daemon\documents\github\smart-line\message.c
 
 1718394592 source:c:\users\daemon\documents\github\smart-line\system.c
 	"system.h"
@@ -65,18 +66,19 @@
 1718394578 c:\users\daemon\documents\github\smart-line\system.h
 	"entity.h"
 
-1719058100 source:c:\users\daemon\documents\github\smart-line\process.c
+1721399773 source:c:\users\daemon\documents\github\smart-line\process.c
 	"process.h"
+	"entity.h"
 
-1719047736 c:\users\daemon\documents\github\smart-line\process.h
+1720123335 c:\users\daemon\documents\github\smart-line\process.h
 	"smartline.h"
 	<stddef.h>
 	<stdbool.h>
 
-1719058805 source:c:\users\daemon\documents\github\smart-line\smartline.c
+1721412176 source:c:\users\daemon\documents\github\smart-line\smartline.c
 	"smartline.h"
 
-1719059524 source:c:\users\daemon\documents\github\smart-line\main.c
+1721402138 source:c:\users\daemon\documents\github\smart-line\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdlib.h>

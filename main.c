@@ -98,6 +98,18 @@ int main(int argc, char *argv[]) {
     smartLineStart(&smart);
 
 
+    /*
+    double t = 0.0;
+    while (true) {
+        printf ("laci");
+        if (t == 2.0) {
+            sendItem(smart);
+            t = 0.0;
+        }
+        t += smart.timerIncrementum;
+    }*/
+
+
    // while (1) {}
    pthread_mutex_destroy(&smart.lock);
     return 0;

@@ -14,6 +14,7 @@
 typedef struct _smartline {
     // thread
         pthread_t sysTimerThread;
+        pthread_t sysOperatorThread;
         pthread_mutex_t lock;
     // time
         double timerIncrementum;

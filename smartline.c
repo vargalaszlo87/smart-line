@@ -9,7 +9,7 @@ void sysTimerHandler() {
 #endif
     if (this == NULL) {
         fprintf (stderr, "NULL pointer...");
-        return false;
+        //return false;
     }
     pthread_mutex_lock(&this->lock);
     this->sysTick = !this->sysTick;
@@ -36,10 +36,10 @@ void* sysTimer(void *arg) {
         nanosleep(&ts, NULL);
         sysTimerHandler(sysTemp);
     }
-    printf ("befejezõdött");
 }
 
 bool sysTimerStart(smartline *this) {
+
 
     #ifdef __linux__
     // jelkezelo beallitasa
@@ -81,8 +81,8 @@ bool sysTimerStart(smartline *this) {
         message("smartLineMake_DEFAULT_ERROR");
         return false;
     }
-    else
-        pthread_join(this->sysTimerThread, NULL);
+    //else
+    //    pthread_join(this->sysTimerThread, NULL);
     #endif
     printf ("A szál befejezõdött...");
     return true;
@@ -116,14 +116,51 @@ bool smartLineInit(smartline *s) {
     return true;
 }
 
+void* sysOperator(void* arg) {
+
+    smartline* sysOpTemp = (smartline*)arg;
+
+    // DEV
+    double tick = 3.1;
+    double t = 0.0;
+    int tempSysTick = sysOpTemp -> sysTick;
+    while (true) {
+        printf ("%lf ", sysOpTemp -> timerIncrementum);
+        if (tempSysTick != sysOpTemp -> sysTick) {
+            t += 0.1;
+            tempSysTick = sysOpTemp -> sysTick;
+            //sendItem(sysOpTemp);
+            printf ("tikkkk");
+        }
+        if (t >= tick) {
+            printf ("Tick\n");
+            t = 0.0;
+        }
+
+    }
+}
+
+bool sysOperatorStart(smartline* this) {
+    if (pthread_create(&this->sysOperatorThread, NULL, sysOperator, (void*)this) != 0) {
+        #ifdef NDEBUG
+            sprintf (stderr, "> Problem with sysOperator-thread. (pthread_create --> sysOperatorStart)");
+        #endif
+        message("SysOperatorStart_DEFAULT_ERROR");
+        return false;
+    }
+    //else
+    //    pthread_join(this->sysOperatorThread, NULL);
+}
+
 bool smartLineStart(smartline *this) {
 
     // timer
     this->timerDivider = 1.0;
     this->sysTime = 0.0;
     sysTimerStart(this);
+    sysOperatorStart(this);
+    printf ("faszom");
 
-
-    pthread_exit(NULL);
+    //pthread_exit(NULL);
     return true;
 }
