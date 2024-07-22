@@ -56,7 +56,6 @@ bool shiftRight(entity* this, smartline* s) {
     return true;
 }
 
-
 // entities
 
 bool entityInit(entity *this) {
@@ -226,7 +225,7 @@ int8_t entityGetStatus(entity *this) {
 void entityJob(entity *this, smartline *s) {
 
     // DEV
-    entityShowContainers(s);
+    //entityShowContainers(s);
 
 
 /*
@@ -249,16 +248,42 @@ void entityJob(entity *this, smartline *s) {
 */
 
 
-        // status
-        if (entityGetStatus(this) != RUN) {         // the state of entity is not RUN
-            return false;
+
+        // stop event's
+        // simple
+        if (entityGetStatus(this) < 5) {            // the state of entity is ERROR || UNKNOW ||
+            return false;                           // STOP || PAUSE || MAINTENANCE || TOOLCHANGE
         }
-        // load
-        if (entityLoad(this, FULL))  {              // the load of capacity is FULL
+        // i'm full and the input of the next entity(s) is blocked
+        if (entityLoad(this, FULL)) {
+            // i'm the last
+            if (this -> ID.next[0] == 0)
+                return false;
+            // finding next route options
+            bool nextEntityIsFull = true;
+            for (int i = 0; i < (sizeof(this -> ID.next) / sizeof(this -> ID.next[0]) - 1); i++)
+            {
+                 entity* nextEntityPtr = pointerFromID(s, this->ID.next[i]);
+                 if (!nextEntityPtr->interface.inputBlocked) {
+                    nextEntityIsFull = false;
+                    break;
+                 }
+                 free(nextEntityPtr);
+                 nextEntityPtr = NULL;
+            }
+            if (nextEntityIsFull == true)
+                return false;
+        }
+
+        // blocking the input
+        // than full
+        if (entityLoad(this, FULL) || this->capacity.itemBool[0])  {   // the load of capacity is FULL
             this->interface.inputBlocked = true;
-            this->status = OUTWAITING;
-            return false;
         }
+        else {
+            this->interface.inputBlocked = false;
+        }
+
 
         /*else if (entityLoad(this, EMPTY)) {         // the load of capacity is EMPTY
             this->interface.inputBlocked = false;

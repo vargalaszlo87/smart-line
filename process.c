@@ -70,7 +70,6 @@ void process01(smartline* this) {
     for (int i = this->entitySize - 1 ; i >= 0; i--) {
         entityJob(this->entityPointer[i], this);
     }
-    // ide kell majd if
     //entityShowContainers(this);
 }
 

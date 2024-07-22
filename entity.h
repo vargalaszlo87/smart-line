@@ -66,17 +66,19 @@ typedef struct _entity {
             ERROR = -1,                 // rendszerhiba
             // unknow
             UNKNOW = 0,                 // ismeretlen
-            // normal
+            // stopped
             STOP = 1,                   // all
-            RUN = 2,                    // termel
-            PAUSE = 3,                  // szunet
-            INWAITING = 4,              // bemenetre varakozik
-            OUTWAITING = 5,             // kimenetre varakozik
+            PAUSE = 2,                  // szunet
             // maintenance
-            MAINTENANCE = 6,            // karbantartas
-            TOOLCHANGE = 7,             // szerszamcsere
+            MAINTENANCE = 3,            // karbantartas
+            TOOLCHANGE = 4,             // szerszamcsere
+            // logistic
+            INWAITING = 5,              // bemenetre varakozik
+            OUTWAITING = 6,             // kimenetre varakozik
             // other
-            THROUGH = 8                 // atengedo uzem
+            THROUGH = 7,                // atengedo uzem
+            // normal
+            RUN = 99                     // termel
         } status_type;
         uint8_t load;
         enum {

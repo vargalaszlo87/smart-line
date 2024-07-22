@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
     strncpy(machineB.name, "AF20", 4);
     machineB.ID.own = 11;
     machineB.ID.previus[0] = 10;
-    machineB.ID.next[0] = 12;
+    machineB.ID.next[0] = 0;
 
     // Step 3: set capacity and time of machine
     machineB.capacity.inWaiting = 2;
@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
     smart.timerDivider = 10.0;  // default: 1.0
     smart.sysTime = 0.0;
     smart.sendTime = 7.8;
-    smart.takeTime = 8.4;
+    smart.takeTime = 6.4;
 
     // sysTimer start
     if (pthread_create(&sysTimerThread, NULL, sysTimer, &smart) != 0) {
