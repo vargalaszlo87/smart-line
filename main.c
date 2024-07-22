@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
 
 // threading
     pthread_t sysTimerThread;
+    pthread_t sysMaterialHandlerThread;
     pthread_t sysOperatorThread;
     pthread_mutex_t lock;
 
@@ -105,6 +106,7 @@ int main(int argc, char *argv[]) {
     smart.timerDivider = 10.0;  // default: 1.0
     smart.sysTime = 0.0;
     smart.sendTime = 7.8;
+    smart.takeTime = 8.4;
 
     // sysTimer start
     if (pthread_create(&sysTimerThread, NULL, sysTimer, &smart) != 0) {
@@ -116,16 +118,16 @@ int main(int argc, char *argv[]) {
     }
 
     // sysOperator start
-    if (pthread_create(&sysOperatorThread, NULL, sysOperator, &smart) != 0) {
+    if (pthread_create(&sysMaterialHandlerThread, NULL, sysMaterialHandler, &smart) != 0) {
         #ifdef NDEBUG
-            sprintf (stderr, "> Problem with sysOperator-thread. (pthread_create --> sysOperatorStart)");
+            sprintf (stderr, "> Problem with sysOperator-thread. (pthread_create --> sysMaterialHandler)");
         #endif
         message("SysOperatorStart_DEFAULT_ERROR");
         return false;
     }
 
     pthread_join(sysTimerThread, NULL);
-    pthread_join(sysOperatorThread, NULL);
+    pthread_join(sysMaterialHandlerThread, NULL);
 
 
    // while (1) {}

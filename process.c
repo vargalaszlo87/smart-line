@@ -21,34 +21,47 @@ bool sendItem(smartline* s) {
         return false;
     else {
         first.capacity.itemBool[0] = 1;
-        first.capacity.itemID = generateID(5);
+        first.capacity.itemID[0] = generateID(5);
+    }
+    return true;
+}
+
+// takeItem
+// taking the finished item
+bool takeItem(smartline *s) {
+    if (s->entitySize < 1)          // haven't entity
+        return false;
+    entity last = *(entity*)s->entityPointer[s->entitySize - 1];
+    if (!last.capacity.itemBool[last.capacity.full - 1]) // there is an item at the last position
+        return false;
+    else {
+        last.capacity.itemBool[last.capacity.full - 1] = 0;
+        last.capacity.itemID[last.capacity.full - 1] = 0;
     }
     return true;
 }
 
 // send
 // sending preparation
-bool send(smartline *s) {
-    double t = 0.0;
+bool materialHandler(smartline *s) {
+    double timerSender = 0.0;
+    double timerTaker = 0.0;
     int tempSysTick = s -> sysTick;
     while (true) {
         if (tempSysTick != s -> sysTick) {
-            t += s -> timerIncrementum;
+            timerSender += s -> timerIncrementum;
+            timerTaker += s -> timerIncrementum;
             tempSysTick = s -> sysTick;
         }
-        if (t >= s->sendTime) {
+        if (timerSender >= s->sendTime) {
             sendItem(s);
-            t = 0.0;
+            timerSender = 0.0;
+        }
+        if (timerTaker >= s->takeTime) {
+            takeItem(s);
+            timerTaker = 0.0;
         }
     }
-}
-
-
-// takeItem
-// taking the finished item
-bool takeItem() {
-
-    return true;
 }
 
 // process01

@@ -117,11 +117,8 @@ bool smartLineInit(smartline *s) {
     return true;
 }
 
-void* sysOperator(void* arg) {
-    smartline* sysOpTemp = (smartline*)arg;
-
-    // sender start
-    send();
-
+void* sysMaterialHandler(void* arg) {
+    smartline* sysMHTemp = (smartline*)arg;
+    materialHandler();
 }
 

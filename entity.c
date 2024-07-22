@@ -5,46 +5,6 @@
 
 #include "entity.h"
 
-/*
-
-DEV 2
-
-#include <stdio.h>
-
-void megnovel(int* ptr) {
-   (*ptr)++;
-}
-
-int main() {
-    int var1 = 42;
-    float var2 = 3.14;
-    char var3 = 'a';
-
-    // Tömb pointerek tárolására
-    void* pointers[3];
-
-    // Pointerek hozzáadása a tömbhöz
-    pointers[0] = &var1;
-    pointers[1] = &var2;
-    pointers[2] = &var3;
-
-    // Kiírjuk a tömbben tárolt címeket
-    for (int i = 0; i < 3; i++) {
-        printf("Pointer %d address: %p\n", i, pointers[i]);
-    }
-
-    megnovel (pointers[0]);
-
-    // Kiírjuk a tényleges értékeket a pointereken keresztül
-    printf("Value of var1: %d\n", *(int*)pointers[0]);
-    printf("Value of var2: %.2f\n", *(float*)pointers[1]);
-    printf("Value of var3: %c\n", *(char*)pointers[2]);
-
-    return 0;
-}
-
-*/
-
 // others
 
 void* pointerFromID(smartline* s, uint16_t entityID) {
@@ -58,10 +18,6 @@ void* pointerFromID(smartline* s, uint16_t entityID) {
 }
 
 bool shiftRight(entity* this, smartline* s) {
-
-
- //   pointerFromID(s, this->ID.next[0]);
-
     for (int i = this->capacity.full - 1; i >= 0 ; i--) {
         if (!this -> capacity.itemBool[i])   // if not 1, then continue
             continue;
@@ -94,7 +50,6 @@ bool shiftRight(entity* this, smartline* s) {
                 this -> capacity.itemID[i + 1] = this -> capacity.itemID[i];
                 this -> capacity.itemID[i] = 0;
             }
-
         }
     }
 
@@ -300,8 +255,8 @@ void entityJob(entity *this, smartline *s) {
         }
         // load
         if (entityLoad(this, FULL))  {              // the load of capacity is FULL
-            //this->interface.inputBlocked = true;
-            //this->status =
+            this->interface.inputBlocked = true;
+            this->status = OUTWAITING;
             return false;
         }
 
