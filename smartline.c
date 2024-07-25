@@ -10,10 +10,10 @@ void* sysTimerHandler(void *arg) {
     double divider = sysTemp -> timerDivider;
     pthread_mutex_unlock(&sysTemp->lock);
     // timer for system
-    struct timespec ts;
-    ts.tv_sec = 0;
-    long int nsec = (long int)((incrementum * divider) * 1e9);
-    ts.tv_nsec = (long int)((incrementum * divider) * 1e9);
+    //struct timespec ts;
+    //ts.tv_sec = 0;
+    //ts.tv_nsec = (long int)((incrementum * divider) * 1e9);
+
     long time_spent;
     // timer for process
     sysTemp->sendTimer = 0.0;
@@ -33,19 +33,19 @@ void* sysTimerHandler(void *arg) {
         process01(sysTemp);     // entityJob
         process02(sysTemp);     // taker/sender
 
-        //for (int i = 0 ; i < 1e5 ; i++) {
-        //    int j = i;
-        //}
+        for (int i = 0 ; i < 1e5 ; i++) {
+            int j = i;
+        }
 
         // timing
         clock_t end = clock();
         time_spent = (long int)((double)(end - begin) / CLOCKS_PER_SEC * 1e9);
-        //ts.tv_nsec = (long int)(nsec - 1);
+
 
         //printf ("\n\n%d", ts.tv_nsec - time_spent);
 
-
-        nanosleep(&ts, NULL);
+        usleep(100);
+        //nanosleep(&ts, NULL);
     }
 }
 
