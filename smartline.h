@@ -19,7 +19,9 @@ typedef struct _smartline {
         double timerDivider;
         double sysTime;
         double sendTime;
+        double sendTimer;
         double takeTime;
+        double takeTimer;
         int sysTick;
         #ifdef __linux__
         timer_t timerid;
@@ -36,12 +38,7 @@ typedef struct _smartline {
 
 static smartline* psmartline;
 
-#ifdef __linux__
-bool sysTimerHandler(int , siginfo_t *, void *);
-#elif _WIN32 || _WIN64
-void sysTimerHandler();
-#endif
-void* sysTimer(void *);
+void* sysTimerHandler(void *);
 void* sysMaterialHandler(void* );
 bool sysTimerStart(smartline *);
 bool smartLineInit(smartline *);

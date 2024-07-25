@@ -1,40 +1,51 @@
 #include "smartline.h"
 
-#ifdef __linux__
-void sysTimerHandler(int signal, siginfo_t *si, void *uc)
-#elif _WIN32 || _WIN64
-void sysTimerHandler(smartline* this) {
-#else
-void sysTimerHandler() {
-#endif
-    if (this == NULL) {
-        fprintf (stderr, "NULL pointer...");
-        //return false;
-    }
-    pthread_mutex_lock(&this->lock);
-    this->sysTick = !this->sysTick;
-    this->sysTime += 0.1;
-    pthread_mutex_unlock(&this->lock);
-    #ifdef NDEBUG
-        printf ("sysTick: %d \n",p->sysTick);
-        printf ("sysTime: %lf \n",p->sysTime);
-    #endif
-    process01(this);
-}
 
-void* sysTimer(void *arg) {
+void* sysTimerHandler(void *arg) {
+    // args
     smartline* sysTemp = (smartline*)arg;
+    // threading
     pthread_mutex_lock(&sysTemp->lock);
     double incrementum = sysTemp -> timerIncrementum;
     double divider = sysTemp -> timerDivider;
     pthread_mutex_unlock(&sysTemp->lock);
-    // timer
+    // timer for system
     struct timespec ts;
     ts.tv_sec = 0;
-    ts.tv_nsec = (long)((incrementum * divider) * 1e9);
+    long int nsec = (long int)((incrementum * divider) * 1e9);
+    ts.tv_nsec = (long int)((incrementum * divider) * 1e9);
+    long time_spent;
+    // timer for process
+    sysTemp->sendTimer = 0.0;
+    sysTemp->takeTimer = 0.0;
     while (true) {
+        clock_t begin = clock();
+        // job
+        pthread_mutex_lock(&sysTemp->lock);
+        sysTemp->sysTick = !sysTemp->sysTick;
+        sysTemp->sysTime += 0.1;
+        pthread_mutex_unlock(&sysTemp->lock);
+        #ifdef NDEBUG
+            printf ("sysTick: %d \n",p->sysTick);
+            printf ("sysTime: %lf \n",p->sysTime);
+        #endif
+        // process
+        process01(sysTemp);     // entityJob
+        process02(sysTemp);     // taker/sender
+
+        //for (int i = 0 ; i < 1e5 ; i++) {
+        //    int j = i;
+        //}
+
+        // timing
+        clock_t end = clock();
+        time_spent = (long int)((double)(end - begin) / CLOCKS_PER_SEC * 1e9);
+        //ts.tv_nsec = (long int)(nsec - 1);
+
+        //printf ("\n\n%d", ts.tv_nsec - time_spent);
+
+
         nanosleep(&ts, NULL);
-        sysTimerHandler(sysTemp);
     }
 }
 
@@ -117,8 +128,8 @@ bool smartLineInit(smartline *s) {
     return true;
 }
 
-void* sysMaterialHandler(void* arg) {
+/*void* sysMaterialHandler(void* arg) {
     smartline* sysMHTemp = (smartline*)arg;
     materialHandler();
-}
+}*/
 

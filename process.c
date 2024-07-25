@@ -41,29 +41,6 @@ bool takeItem(smartline *s) {
     return true;
 }
 
-// send
-// sending preparation
-bool materialHandler(smartline *s) {
-    double timerSender = 0.0;
-    double timerTaker = 0.0;
-    int tempSysTick = s -> sysTick;
-    while (true) {
-        if (tempSysTick != s -> sysTick) {
-            timerSender += s -> timerIncrementum;
-            timerTaker += s -> timerIncrementum;
-            tempSysTick = s -> sysTick;
-        }
-        if (timerSender >= s->sendTime) {
-            sendItem(s);
-            timerSender = 0.0;
-        }
-        if (timerTaker >= s->takeTime) {
-            takeItem(s);
-            timerTaker = 0.0;
-        }
-    }
-}
-
 // process01
 // - iterating through all
 void process01(smartline* this) {
@@ -73,3 +50,15 @@ void process01(smartline* this) {
     //entityShowContainers(this);
 }
 
+void process02(smartline* this) {
+        this->sendTimer += this->timerIncrementum;
+        this->takeTimer += this->timerIncrementum;
+        if (this -> sendTimer >= this -> sendTime) {
+            sendItem(this);
+            this->sendTimer = 0.0;
+        }
+        if (this -> takeTimer >= this -> takeTime) {
+            takeItem(this);
+            this->takeTimer = 0.0;
+        }
+}

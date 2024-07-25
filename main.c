@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
     smart.takeTime = 6.4;
 
     // sysTimer start
-    if (pthread_create(&sysTimerThread, NULL, sysTimer, &smart) != 0) {
+    if (pthread_create(&sysTimerThread, NULL, sysTimerHandler, &smart) != 0) {
         #ifdef NDEBUG
             sprintf (stderr, "> Problem with sysTimer-thread. (pthread_create --> smartLineMake)");
         #endif
@@ -118,17 +118,18 @@ int main(int argc, char *argv[]) {
     }
 
     // sysOperator start
-    if (pthread_create(&sysMaterialHandlerThread, NULL, sysMaterialHandler, &smart) != 0) {
+ /*   if (pthread_create(&sysMaterialHandlerThread, NULL, sysMaterialHandler, &smart) != 0) {
         #ifdef NDEBUG
             sprintf (stderr, "> Problem with sysOperator-thread. (pthread_create --> sysMaterialHandler)");
         #endif
         message("SysOperatorStart_DEFAULT_ERROR");
         return false;
     }
+*/
+    printf ("\ntest\n");
 
     pthread_join(sysTimerThread, NULL);
-    pthread_join(sysMaterialHandlerThread, NULL);
-
+//    pthread_join(sysMaterialHandlerThread, NULL);
 
    // while (1) {}
    pthread_mutex_destroy(&smart.lock);

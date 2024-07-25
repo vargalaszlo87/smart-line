@@ -225,7 +225,7 @@ int8_t entityGetStatus(entity *this) {
 void entityJob(entity *this, smartline *s) {
 
     // DEV
-    //entityShowContainers(s);
+    entityShowContainers(s);
 
 
 /*
